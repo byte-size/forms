@@ -1,0 +1,29 @@
+{
+  "name": "tw-ui-forms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byte-size/tw-ui-forms.git"
+  },
+  "keywords": [
+    "Tailwind",
+    "UI",
+    "Forms"
+  ],
+  "author": "Kemal Yalcinkaya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byte-size/tw-ui-forms/issues"
+  },
+  "homepage": "https://github.com/byte-size/tw-ui-forms#readme",
+  "dependencies": {
+    "focus-trap": "^5.1.0",
+    "form-serialize": "^0.7.2",
+    "superstruct": "^0.8.3"
+  }
+}
