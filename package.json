@@ -1,9 +1,18 @@
 {
   "name": "tw-ui-forms",
+  "main": "./dist/tw-ui-forms.min.js",
+  "module": "./dist/tw-ui-forms.esm.js",
+  "browser": "./dist/tw-ui-forms.umd.js",
+  "files": [
+    "dist/*"
+  ],
   "version": "1.0.0",
-  "description": "",
+  "description": "Focus trapping and external validation configurable Tailwind UI based form library",
   "scripts": {
-    "rollup": "rollup --config rollup.config.js"
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/tw-ui-forms.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/tw-ui-forms.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/tw-ui-forms.min.js"
   },
   "repository": {
     "type": "git",
@@ -11,8 +20,11 @@
   },
   "keywords": [
     "Tailwind",
-    "UI",
-    "Forms"
+    "Tailwind UI",
+    "Vue JS",
+    "Forms",
+    "Validation",
+    "Focus Trap"
   ],
   "author": "Kemal Yalcinkaya",
   "license": "ISC",
@@ -26,19 +38,18 @@
     "superstruct": "^0.8.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
     "rollup": "^1.32.0",
-    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^6.2.1",
     "rollup-plugin-internal": "^1.0.4",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^2.1.1",
-    "rollup-plugin-uglify-es": "0.0.1",
+    "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-vue": "^5.1.6",
+    "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
-  },
-  "main": "dist/tw-ui-form.esm.js",
-  "files": [
-    "dist/*"
-  ]
+  }
 }
