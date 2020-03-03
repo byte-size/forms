@@ -10,7 +10,7 @@ import internal from "rollup-plugin-internal";
 export default {
   input: "src/index.js",
   output: {
-    name: "bundle"
+    name: "twUIForms"
   },
   plugins: [
     vue({ css: false }),
@@ -18,7 +18,12 @@ export default {
     babel(),
     resolve(),
     commonjs(),
-    internal(["form-serialize", "focus-trap", "superstruct"]),
+    internal([
+      "form-serialize",
+      "focus-trap",
+      "superstruct",
+      "v-click-outside"
+    ]),
     terser(),
     filesize()
   ]

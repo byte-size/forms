@@ -1,18 +1,18 @@
 {
   "name": "tw-ui-forms",
-  "main": "./dist/tw-ui-forms.min.js",
+  "main": "./dist/tw-ui-forms.umd.js",
   "module": "./dist/tw-ui-forms.esm.js",
-  "browser": "./dist/tw-ui-forms.umd.js",
+  "browser": "./dist/tw-ui-forms.min.js",
   "files": [
     "dist/*"
   ],
   "version": "1.0.0",
-  "description": "Focus trapping and external validation configurable Tailwind UI based form library",
+  "description": "Focus trapping and external validation schema configurable Tailwind UI compatible form functionality components",
   "scripts": {
-    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build": "npm run build:umd & npm run build:es & npm run build:iife",
     "build:umd": "rollup --config rollup.config.js --format umd --file dist/tw-ui-forms.umd.js",
     "build:es": "rollup --config rollup.config.js --format es --file dist/tw-ui-forms.esm.js",
-    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/tw-ui-forms.min.js"
+    "build:iife": "rollup --config rollup.config.js --format iife --file dist/tw-ui-forms.min.js"
   },
   "repository": {
     "type": "git",
