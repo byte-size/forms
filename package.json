@@ -35,7 +35,8 @@
   "dependencies": {
     "focus-trap": "^5.1.0",
     "form-serialize": "^0.7.2",
-    "superstruct": "^0.8.3"
+    "superstruct": "^0.8.3",
+    "v-click-outside": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
