@@ -10,7 +10,10 @@ import internal from 'rollup-plugin-internal'
 export default {
   input: 'src/index.js',
   output: {
-    name: 'bsForms'
+    name: 'bsForms',
+    globals: {
+      vue: 'Vue'
+    }
   },
   plugins: [
     vue({ css: false }),
@@ -21,5 +24,6 @@ export default {
     internal(['form-serialize', 'focus-trap', 'superstruct', 'v-click-outside']),
     terser(),
     filesize()
-  ]
+  ],
+  external: ['vue']
 }

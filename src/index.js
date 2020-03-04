@@ -1,10 +1,12 @@
 // Dependencies
 import vClickOutside from 'v-click-outside'
-import FormContainer from './Form.Container.vue'
+
+// Components
+import Form from './Form.vue'
 
 export default {
   install(Vue, _) {
-    Vue.component('form-container', FormContainer)
     Vue.use(vClickOutside)
+    Vue.component('bs-form', Form)
   }
 }

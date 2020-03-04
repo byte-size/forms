@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "nodemon -e js,vue --watch src --exec npm run build",
     "build": "npm run build:umd & npm run build:es & npm run build:iife",
-    "build:es": "ESFORMAT=true rollup --config rollup.config.js --format es --file dist/esm.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/esm.js",
     "build:umd": "rollup --config rollup.config.js --format umd --file dist/umd.js",
     "build:iife": "rollup --config rollup.config.js --format iife --file dist/min.js"
   },
