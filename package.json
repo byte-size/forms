@@ -1,22 +1,23 @@
 {
-  "name": "tw-ui-forms",
-  "main": "./dist/tw-ui-forms.umd.js",
-  "module": "./dist/tw-ui-forms.esm.js",
-  "browser": "./dist/tw-ui-forms.min.js",
+  "name": "bs-forms",
+  "main": "./dist/umd.js",
+  "module": "./dist/esm.js",
+  "browser": "./dist/min.js",
   "files": [
     "dist/*"
   ],
   "version": "1.0.0",
   "description": "Focus trapping and external validation schema configurable Tailwind UI compatible form functionality components",
   "scripts": {
+    "dev": "nodemon -e js,vue --watch src --exec npm run build",
     "build": "npm run build:umd & npm run build:es & npm run build:iife",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/tw-ui-forms.umd.js",
-    "build:es": "rollup --config rollup.config.js --format es --file dist/tw-ui-forms.esm.js",
-    "build:iife": "rollup --config rollup.config.js --format iife --file dist/tw-ui-forms.min.js"
+    "build:es": "ESFORMAT=true rollup --config rollup.config.js --format es --file dist/esm.js",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/umd.js",
+    "build:iife": "rollup --config rollup.config.js --format iife --file dist/min.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/byte-size/tw-ui-forms.git"
+    "url": "git+https://github.com/byte-size/forms.git"
   },
   "keywords": [
     "Tailwind",
@@ -29,9 +30,9 @@
   "author": "Kemal Yalcinkaya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/byte-size/tw-ui-forms/issues"
+    "url": "https://github.com/byte-size/forms/issues"
   },
-  "homepage": "https://github.com/byte-size/tw-ui-forms#readme",
+  "homepage": "https://github.com/byte-size/forms#readme",
   "dependencies": {
     "focus-trap": "^5.1.0",
     "form-serialize": "^0.7.2",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
+    "nodemon": "^2.0.2",
     "rollup": "^1.32.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
