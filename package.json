@@ -2,7 +2,6 @@
   "name": "bs-forms",
   "main": "./dist/umd.js",
   "module": "./dist/esm.js",
-  "browser": "./dist/min.js",
   "files": [
     "dist/*"
   ],
@@ -10,10 +9,9 @@
   "description": "Focus trapping and external validation schema configurable Tailwind UI compatible form functionality components",
   "scripts": {
     "dev": "nodemon -e js,vue --watch src --exec npm run build",
-    "build": "npm run build:umd & npm run build:es & npm run build:iife",
+    "build": "npm run build:umd & npm run build:es",
     "build:es": "rollup --config rollup.config.js --format es --file dist/esm.js",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/umd.js",
-    "build:iife": "rollup --config rollup.config.js --format iife --file dist/min.js"
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/umd.js"
   },
   "repository": {
     "type": "git",
