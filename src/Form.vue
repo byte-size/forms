@@ -121,6 +121,10 @@ export default {
           if (validationResult.success) {
             this.triggerLoadingState('loading')
             const transportResult = await this.transportFunction.func(validationResult.data)
+            if (this.$bsFormsDebug) {
+              console.log('BS Forms Transport Function Response:')
+              console.log(transportResult)
+            }
             if (this.transportFunction.success(transportResult)) {
               this.triggerLoadingState('success')
               this.$emit('success', validationResult.data)

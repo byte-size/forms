@@ -5,8 +5,9 @@ import vClickOutside from 'v-click-outside'
 import Form from './Form.vue'
 
 export default {
-  install(Vue, _) {
+  install(Vue, options) {
     Vue.use(vClickOutside)
     Vue.component('bs-form', Form)
+    if (options.debug) Vue.prototype.$bsFormsDebug = true
   }
 }
