@@ -5,7 +5,7 @@
   "files": [
     "dist/*"
   ],
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Focus trapping and external validation schema configurable Tailwind UI compatible form functionality components",
   "scripts": {
     "dev": "nodemon -e js,vue --watch src --exec npm run build",
