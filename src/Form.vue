@@ -16,12 +16,12 @@ export default {
   props: {
     structSchema: {
       type: Object,
-      required: true
+      required: true,
     },
     transportFunction: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -30,7 +30,7 @@ export default {
       trap: null,
       isActive: false,
       domForm: null,
-      loadingElement: null
+      loadingElement: null,
     }
   },
   mounted() {
@@ -57,7 +57,7 @@ export default {
     },
     initFocusTrap() {
       this.trap = FocusTrap(this.$refs.form, {
-        clickOutsideDeactivates: true
+        clickOutsideDeactivates: true,
       })
     },
     initValidatorElements() {
@@ -93,8 +93,8 @@ export default {
             data: {
               path,
               value,
-              message: `Form Container --> Validation error in ${path[0]}: ${value}`
-            }
+              message: `Form Container --> Validation error in ${path[0]}: ${value}`,
+            },
           })
           this.displayValidationErrors(path[0], value)
         }
@@ -127,9 +127,9 @@ export default {
             }
             if (this.transportFunction.success(transportResult)) {
               this.triggerLoadingState('success')
-              this.$emit('success', validationResult.data)
+              this.$emit('success', transportResult)
             } else {
-              this.$emit('error', 'Error response on transport function')
+              this.$emit('error', transportResult)
             }
           } else {
             this.$emit('warning', validationResult.data)
@@ -171,7 +171,7 @@ export default {
         this.loadingElement.$el.classList = consumedClasses
         this.loadingElement = null
       })
-    }
-  }
+    },
+  },
 }
 </script>
