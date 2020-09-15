@@ -153,7 +153,7 @@ export default {
       } else if (state === 'success') {
         const submitButton = this.domForm.querySelector('button[type=submit]')
         submitButton.removeAttribute('disabled')
-        this.loadingElement.state = 'success'
+        if (this.loadingElement) this.loadingElement.state = 'success'
       }
     },
     reset() {
