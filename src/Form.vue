@@ -9,19 +9,22 @@ import Vue from 'vue'
 import Notification from './Notification.vue'
 import Loading from './Loading.vue'
 import serialize from 'form-serialize'
-import FocusTrap from 'focus-trap'
-import { struct } from 'superstruct'
+import { createFocusTrap } from 'focus-trap'
 export default {
   name: 'FormContainer',
   props: {
     structSchema: {
       type: Object,
-      required: true,
+      required: true
     },
     transportFunction: {
       type: Object,
-      required: true,
+      required: true
     },
+    options: {
+      type: Object,
+      default: () => {}
+    }
   },
   data() {
     return {
@@ -30,20 +33,16 @@ export default {
       trap: null,
       isActive: false,
       domForm: null,
-      loadingElement: null,
+      loadingElement: null
     }
   },
   mounted() {
     this.domForm = this.$refs.form
-    this.initStruct()
     this.initValidatorElements()
     this.initTextAreas()
     this.initFocusTrap()
   },
   methods: {
-    initStruct() {
-      this.structModel = struct(this.structSchema)
-    },
     initTextAreas() {
       this.domForm.querySelectorAll('[data-autoresize]').forEach((element) => {
         element.style.boxSizing = 'border-box'
@@ -56,8 +55,8 @@ export default {
       })
     },
     initFocusTrap() {
-      this.trap = FocusTrap(this.$refs.form, {
-        clickOutsideDeactivates: true,
+      this.trap = createFocusTrap(this.$refs.form, {
+        clickOutsideDeactivates: true
       })
     },
     initValidatorElements() {
@@ -84,27 +83,32 @@ export default {
     validateForm() {
       return new Promise((resolve) => {
         const formData = serialize(this.$refs.form, { hash: true })
-        const [error, result] = this.structModel.validate(formData)
-        if (error) {
-          const { path, value } = error
-          // console.log(`Form Container --> Validation error in ${path[0]}: ${value}`)
+        let errors = []
+        Object.keys(this.structSchema).forEach((prop) => {
+          const validationFunction = this.structSchema[prop]
+          const validationResult = validationFunction(formData[prop])
+          if (validationResult !== true) errors.push({ prop, value: validationResult() })
+        })
+        // Error
+        if (errors.length > 0) {
+          errors.forEach((err) => {
+            this.displayValidationErrors(err.prop, err.value)
+          })
           resolve({
             success: false,
-            data: {
-              path,
-              value,
-              message: `Form Container --> Validation error in ${path[0]}: ${value}`,
-            },
+            errors
           })
-          this.displayValidationErrors(path[0], value)
         }
-        resolve({ success: true, data: result })
+        // Success
+        resolve({ success: true, data: formData })
       })
     },
     displayValidationErrors(ntfcName, message) {
       const ntfcEl = this.domForm.querySelector(`[data-ntfc=${ntfcName}]`)
-      ntfcEl.innerHTML = message
-      ntfcEl.style.display = 'block'
+      if (ntfcEl) {
+        ntfcEl.innerHTML = message
+        ntfcEl.style.display = 'block'
+      }
     },
     clearValidationErrors(inputName) {
       this.domForm.querySelector(`[data-validation-message=${inputName}]`).innerHTML = ''
@@ -132,7 +136,7 @@ export default {
               this.$emit('error', transportResult)
             }
           } else {
-            this.$emit('warning', validationResult.data)
+            this.$emit('warning', validationResult.errors)
           }
         })
       }
@@ -171,7 +175,7 @@ export default {
         this.loadingElement.$el.classList = consumedClasses
         this.loadingElement = null
       })
-    },
-  },
+    }
+  }
 }
 </script>
