@@ -26,6 +26,11 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    isCustomNotificationComponentExists() {
+      return this.options?.notificationComponent
+    },
+  },
   data() {
     return {
       structModel: null,
@@ -37,6 +42,8 @@ export default {
     }
   },
   mounted() {
+    console.log('Hello do i have a notification component??')
+    console.log(this.options)
     this.domForm = this.$refs.form
     this.initValidatorElements()
     this.initTextAreas()
@@ -66,7 +73,8 @@ export default {
           // Create Notification elements programatically and add the original classes
           // https://css-tricks.com/creating-vue-js-component-instances-programmatically/
           const rawClasses = ntfcElRaw.classList.value
-          const NtfcElementClass = Vue.extend(Notification)
+          const customComponent = this.options.notificationComponent
+          const NtfcElementClass = Vue.extend(customComponent ?? Notification)
           const ntfcElInstance = new NtfcElementClass({ propsData: { name: key } })
           ntfcElInstance.$mount(ntfcElRaw).$el.className = rawClasses
         }
@@ -86,10 +94,8 @@ export default {
         let errors = []
         Object.keys(this.structSchema).forEach((prop) => {
           const validationFunction = this.structSchema[prop]
-          // Now we get all the formdata as second parameter in order to be able to do cross prop validations
-          // For example: Date and Time combination not before now
-          const validationResult = validationFunction(formData[prop], formData)
-          if (validationResult !== true) errors.push({ prop, value: validationResult })
+          const validationResult = validationFunction(formData[prop])
+          if (validationResult !== true) errors.push({ prop, value: validationResult() })
         })
         // Error
         if (errors.length > 0) {
@@ -107,13 +113,15 @@ export default {
     },
     displayValidationErrors(ntfcName, message) {
       const ntfcEl = this.domForm.querySelector(`[data-ntfc=${ntfcName}]`)
+      console.log(ntfcEl)
       if (ntfcEl) {
-        ntfcEl.innerHTML = message
+        if (this.options.notificationComponent) {
+          ntfcEl.title = message
+        } else {
+          ntfcEl.innerHTML = message
+        }
         ntfcEl.style.display = 'block'
       }
-    },
-    clearValidationErrors(inputName) {
-      this.domForm.querySelector(`[data-validation-message=${inputName}]`).innerHTML = ''
     },
     toggleSubmitButton(to) {
       this.domForm.querySelector('button[type=submit]').disabled = !to
