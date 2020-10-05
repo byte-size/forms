@@ -89,7 +89,7 @@ export default {
           // Now we get all the formdata as second parameter in order to be able to do cross prop validations
           // For example: Date and Time combination not before now
           const validationResult = validationFunction(formData[prop], formData)
-          if (validationResult !== true) errors.push({ prop, value: validationResult })
+          if (validationResult !== true) errors.push({ prop, value: validationResult() }) // The result comes as a function!
         })
         // Error
         if (errors.length > 0) {
