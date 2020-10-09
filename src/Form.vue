@@ -120,7 +120,7 @@ export default {
     },
     submitForm(e) {
       if (e) e.preventDefault()
-      if (this.loadingElement && this.loadingElement.state === 'success') {
+      if (this.loadingElement && (this.loadingElement.state === 'success' || this.loadingElement.state === 'warning' || this.loadingElement.state === 'error')) {
         this.reset()
       } else {
         this.validateForm().then(async (validationResult) => {
@@ -135,9 +135,11 @@ export default {
               this.triggerLoadingState('success')
               this.$emit('success', transportResult)
             } else {
+              this.loadingElement.state = 'error'
               this.$emit('error', transportResult)
             }
           } else {
+            this.loadingElement.state = 'warning'
             this.$emit('warning', validationResult.errors)
           }
         })
