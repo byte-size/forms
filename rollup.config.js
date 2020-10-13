@@ -8,22 +8,21 @@ import commonjs from 'rollup-plugin-commonjs'
 import internal from 'rollup-plugin-internal'
 
 export default {
-  input: 'src/index.js',
-  output: {
-    name: 'bsForms',
-    globals: {
-      vue: 'Vue'
-    }
+  input: {
+    index: 'src/index.js',
+    input: 'src/Input.Container.vue'
   },
-  plugins: [
-    vue({ css: false }),
-    postcss(),
-    babel(),
-    resolve(),
-    commonjs(),
-    internal(['form-serialize', 'focus-trap', 'superstruct', 'v-click-outside']),
-    terser(),
-    filesize()
+  output: [
+    {
+      dir: 'dist/esm',
+      format: 'esm'
+    },
+    {
+      dir: 'dist/cjs',
+      format: 'cjs',
+      exports: 'default'
+    }
   ],
+  plugins: [vue(), postcss({ extract: true }), babel(), resolve(), commonjs(),internal(['form-serialize', 'focus-trap', 'superstruct', 'v-click-outside']), terser(), filesize()],
   external: ['vue']
 }

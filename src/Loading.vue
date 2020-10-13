@@ -3,7 +3,8 @@
     <div v-if="state === 'loading'" style="display: flex; justify-content:center; align-items:center; height:100%; width: 100%;">
       <span v-for="i of 3" :key="i" />
     </div>
-    <div v-else style="display: flex; justify-content:center; align-items:center; height:100%; width: 100%;"><p>✔</p></div>
+    <div v-else-if="state === 'success'" style="display: flex; justify-content:center; align-items:center; height:100%; width: 100%;"><p>✔</p></div>
+    <div v-else style="display: flex; justify-content:center; align-items:center; height:100%; width: 100%;"><p>⚠</p></div>
   </div>
   <i v-else v-show="false" :name="'loading'" />
 </template>

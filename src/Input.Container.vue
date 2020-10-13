@@ -23,22 +23,22 @@ export default {
   props: {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     label: {
       type: String,
-      default: () => null,
-    },
+      default: () => null
+    }
   },
   data() {
     return {
-      labelVisible: false,
+      labelVisible: false
     }
   },
   computed: {
     finalName() {
       return this.label ?? this.$options.filters.titleCase(this.name)
-    },
+    }
   },
   mounted() {
     this.setInputAttributesFromProps()
@@ -58,6 +58,8 @@ export default {
       const input = this.getInput()
       if (input)
         input.addEventListener('input', (evt) => {
+          console.log('I have an input change here!')
+          console.log(input.value)
           this.labelVisible = input.value !== ''
         })
     },
@@ -71,13 +73,7 @@ export default {
             this.$slots.default[0].elm.querySelector('select') ||
             this.$slots.default[0].elm.querySelector('textarea')) ??
             null
-    },
-  },
+    }
+  }
 }
 </script>
-
-<style lang="postcss" scoped>
-.input-group-container label {
-  @apply border-l-0;
-}
-</style>

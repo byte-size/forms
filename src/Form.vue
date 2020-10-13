@@ -15,16 +15,16 @@ export default {
   props: {
     structSchema: {
       type: Object,
-      required: true,
+      required: true
     },
     transportFunction: {
       type: Object,
-      required: true,
+      required: true
     },
     options: {
       type: Object,
-      default: () => {},
-    },
+      default: () => {}
+    }
   },
   data() {
     return {
@@ -33,7 +33,7 @@ export default {
       trap: null,
       isActive: false,
       domForm: null,
-      loadingElement: null,
+      loadingElement: null
     }
   },
   mounted() {
@@ -56,7 +56,7 @@ export default {
     },
     initFocusTrap() {
       this.trap = createFocusTrap(this.$refs.form, {
-        clickOutsideDeactivates: true,
+        clickOutsideDeactivates: true
       })
     },
     initValidatorElements() {
@@ -98,7 +98,7 @@ export default {
           })
           resolve({
             success: false,
-            errors,
+            errors
           })
         }
         // Success
@@ -120,13 +120,24 @@ export default {
     },
     submitForm(e) {
       if (e) e.preventDefault()
-      if (this.loadingElement && (this.loadingElement.state === 'success' || this.loadingElement.state === 'warning' || this.loadingElement.state === 'error')) {
+      if (
+        this.loadingElement &&
+        (this.loadingElement.state === 'success' || this.loadingElement.state === 'warning' || this.loadingElement.state === 'error')
+      ) {
         this.reset()
       } else {
         this.validateForm().then(async (validationResult) => {
           if (validationResult.success) {
             this.triggerLoadingState('loading')
-            const transportResult = await this.transportFunction.func(validationResult.data)
+
+            let transportResult
+            try {
+              transportResult = await this.transportFunction.func(validationResult.data)
+            } catch (err) {
+              this.triggerLoadingState('error')
+              return this.$emit('error', err)
+            }
+
             if (this.$bsFormsDebug) {
               console.log('BS Forms Transport Function Response:')
               console.log(transportResult)
@@ -135,11 +146,11 @@ export default {
               this.triggerLoadingState('success')
               this.$emit('success', transportResult)
             } else {
-              this.loadingElement.state = 'error'
+              this.triggerLoadingState('error')
               this.$emit('error', transportResult)
             }
           } else {
-            this.loadingElement.state = 'warning'
+            this.triggerLoadingState('warning')
             this.$emit('warning', validationResult.errors)
           }
         })
@@ -158,15 +169,22 @@ export default {
           this.loadingElement = ldngElInstance.$mount(ldngElRaw)
           this.loadingElement.$el.className = `${rawClasses} bs-form-loading`
         }
-      } else if (state === 'success') {
+      } else {
         const submitButton = this.domForm.querySelector('button[type=submit]')
         submitButton.removeAttribute('disabled')
-        if (this.loadingElement) this.loadingElement.state = 'success'
+        if (this.loadingElement) this.loadingElement.state = state
       }
     },
     reset() {
       // Reset form input fields
       this.domForm.reset()
+      // Dispatch an input event for all children form elements (to trigger InputContainer input listener)
+      const childInputs = this.domForm.querySelectorAll('input, select, textarea')
+      var event = new Event('input', {
+        bubbles: true,
+        cancelable: true
+      })
+      childInputs.forEach((i) => i.dispatchEvent(event))
       // Enable submit button
       const submitButton = this.domForm.querySelector('button[type=submit]')
       submitButton.removeAttribute('disabled')
@@ -179,7 +197,7 @@ export default {
         this.loadingElement.$el.classList = consumedClasses
         this.loadingElement = null
       })
-    },
-  },
+    }
+  }
 }
 </script>
