@@ -58,8 +58,6 @@ export default {
       const input = this.getInput()
       if (input)
         input.addEventListener('input', (evt) => {
-          console.log('I have an input change here!')
-          console.log(input.value)
           this.labelVisible = input.value !== ''
         })
     },
