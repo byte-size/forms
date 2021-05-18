@@ -10,19 +10,28 @@ import internal from 'rollup-plugin-internal'
 export default {
   input: {
     index: 'src/index.js',
-    input: 'src/Input.Container.vue'
+    input: 'src/Input.Container.vue',
   },
   output: [
     {
       dir: 'dist/esm',
-      format: 'esm'
+      format: 'esm',
     },
     {
       dir: 'dist/cjs',
       format: 'cjs',
-      exports: 'default'
-    }
+      exports: 'default',
+    },
   ],
-  plugins: [vue(), postcss({ extract: true }), babel(), resolve(), commonjs(),internal(['form-serialize', 'focus-trap', 'superstruct', 'v-click-outside']), terser(), filesize()],
-  external: ['vue']
+  plugins: [
+    vue(),
+    postcss({ extract: true, plugins: [] }),
+    babel(),
+    resolve(),
+    commonjs(),
+    internal(['form-serialize', 'focus-trap', 'superstruct', 'v-click-outside']),
+    terser(),
+    filesize(),
+  ],
+  external: ['vue'],
 }
