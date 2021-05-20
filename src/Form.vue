@@ -1,5 +1,5 @@
 <template>
-  <form ref="form" v-click-outside="unTrapFocus" @submit="submitForm" @click="trapFocus" @focus="trapFocus">
+  <form ref="form" v-click-outside="unTrapFocus" @submit="submitForm" @click="trapFocus" @focus="trapFocus" @change="$emit('change')">
     <slot />
   </form>
 </template>
@@ -197,6 +197,13 @@ export default {
         this.loadingElement.$el.classList = consumedClasses
         this.loadingElement = null
       })
+    },
+    refreshInputLabels() {
+      const event = new Event('input')
+      if (this.$refs.form) {
+        const childInputs = this.$refs.form.querySelectorAll('input, select, textarea')
+        childInputs.forEach((i) => i.dispatchEvent(event))
+      }
     }
   }
 }

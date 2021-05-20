@@ -57,7 +57,7 @@ export default {
     listenInputChangeForLabel() {
       const input = this.getInput()
       if (input)
-        input.addEventListener('input', (evt) => {
+        input.addEventListener('input', (_) => {
           this.labelVisible = input.value !== ''
         })
     },
